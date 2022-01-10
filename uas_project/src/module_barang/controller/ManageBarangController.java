@@ -5,20 +5,20 @@
 package module_barang.controller;
 
 import module_barang.model.ModelBarang;
-import module_barang.view.BarangView;
+
 import module_barang.view.ManageBarangView;
 
 /**
  *
  * @author akashaka
  */
-public class BarangController {
+public class ManageBarangController {
     private ModelBarang MB;
-    private BarangView VB;
+
     private ManageBarangView VMB;
     
-    public BarangController(BarangView VB){
-    this.VB = VB;
+    public ManageBarangController(ManageBarangView VMB){
+    this.VMB = VMB;
     }
     
     public void clear(){

@@ -5,10 +5,18 @@
  */
 package module_barang.view;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import module_barang.controller.BarangController;
+import module.database.KoneksiDatabase;
+import module_barang.controller.ManageBarangController;
+import module_barang.model.ModelBarang;
 
 /**
  *
@@ -16,22 +24,33 @@ import module_barang.controller.BarangController;
  */
 public class ManageBarangView extends javax.swing.JInternalFrame {
 
-    private BarangController CB;
+    private ManageBarangController CB;
     private DefaultTableModel tabel;
+
     /**
      * Creates new form ManageBarangView
      */
     public ManageBarangView() {
         initComponents();
+        CB = new ManageBarangController(this);
+        tabel = new DefaultTableModel();
+        barangTB.setModel(tabel);
+        
+        tabel.addColumn("Id Barang");
+        tabel.addColumn("Nama Barang");
+        tabel.addColumn("Jenis Barang");
+        tabel.addColumn("Stok Barang");
+        tabel.addColumn("Ukuran Barang");
+        tabel.addColumn("Harga Barang");
+        
+        TampilDataPel();
+        CB.kontrol();
     }
 
-    public BarangController getCB() {
+    public ManageBarangController getCB() {
         return CB;
     }
 
-    public DefaultTableModel getTabel() {
-        return tabel;
-    }
 
     public JTextField getJenis() {
         return JenisbTF;
@@ -77,7 +96,54 @@ public class ManageBarangView extends javax.swing.JInternalFrame {
         return ukuranbTF;
     }
 
+    private void AmbilDataTabel(){
+        int index = barangTB.getSelectedRow();
+        String idb = String.valueOf(barangTB.getValueAt(index, 0));
+        String nama = String.valueOf(barangTB.getValueAt(index, 1));
+        String jenis = String.valueOf(barangTB.getValueAt(index, 2));
+        String quantity = String.valueOf(barangTB.getValueAt(index, 3));
+        String ukuran = String.valueOf(barangTB.getValueAt(index, 4));
+        String harga = String.valueOf(barangTB.getValueAt(index, 5));
+        
+        
+        idbTF.setText(idb);
+        namabTF.setText(nama);
+        JenisbTF.setText(jenis);
+        quantitybTF.setText(quantity);
+        ukuranbTF.setText(ukuran);
+        hargabTF.setText(harga);
+
+        CB.kontroldua();
+    }
     
+    private void TampilDataPel (){
+        tabel.getDataVector().removeAllElements();
+        tabel.fireTableDataChanged();
+        
+        String sql = "SELECT * FROM barang ";
+        try {
+            Statement stat = (Statement) KoneksiDatabase.getKoneksi().createStatement();
+            ResultSet res  = stat.executeQuery(sql);
+            
+            while (res.next()){
+                Object[] hasil;
+                hasil = new Object[6];
+                hasil[0] = res.getString("id_barang");
+                hasil[1] = res.getString("nama");
+                hasil[2] = res.getString("jenis");
+                hasil[3] = res.getString("quantity");
+                hasil[4] = res.getString("ukuran");
+                hasil[5] = res.getString("harga");
+                
+                tabel.addRow(hasil);
+                
+            }
+            
+        } catch (SQLException ex) {
+//            Logger.getLogger(ViewPelanggan.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Tidak dapat menampilkan tabel \n" + ex);
+        }  
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -107,6 +173,9 @@ public class ManageBarangView extends javax.swing.JInternalFrame {
         idbTF = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         KembaliBT = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        barangTB = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
 
         hapusBT.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         hapusBT.setText("Hapus Data");
@@ -169,6 +238,7 @@ public class ManageBarangView extends javax.swing.JInternalFrame {
         jLabel2.setText("Id Barang");
 
         idbTF.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        idbTF.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -252,34 +322,65 @@ public class ManageBarangView extends javax.swing.JInternalFrame {
             }
         });
 
+        barangTB.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        barangTB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                barangTBMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(barangTB);
+
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel3.setText("Data Barang");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(168, 168, 168))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(KembaliBT)))
-                .addContainerGap(35, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(KembaliBT))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(129, 129, 129)
+                                .addComponent(jLabel1)
+                                .addGap(219, 219, 219)
+                                .addComponent(jLabel3)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(KembaliBT)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel3))
                 .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         pack();
@@ -288,6 +389,7 @@ public class ManageBarangView extends javax.swing.JInternalFrame {
     private void hapusBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusBTActionPerformed
         // TODO add your handling code here:
         CB.Delete();
+        TampilDataPel();
     }//GEN-LAST:event_hapusBTActionPerformed
 
     private void batalBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalBTActionPerformed
@@ -299,24 +401,30 @@ public class ManageBarangView extends javax.swing.JInternalFrame {
     private void tambahBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahBTActionPerformed
         // TODO add your handling code here:
         CB.simpan();
+        TampilDataPel();
     }//GEN-LAST:event_tambahBTActionPerformed
 
     private void editBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBTActionPerformed
         // TODO add your handling code here:
         CB.Update();
+        TampilDataPel();
     }//GEN-LAST:event_editBTActionPerformed
 
     private void KembaliBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KembaliBTActionPerformed
         // TODO add your handling code here:
-        BarangView VB = new BarangView();
-        VB.setVisible(true);
-        VB.TampilDataPel();
+        this.dispose();
     }//GEN-LAST:event_KembaliBTActionPerformed
+
+    private void barangTBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_barangTBMouseClicked
+        // TODO add your handling code here:
+        AmbilDataTabel();
+    }//GEN-LAST:event_barangTBMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField JenisbTF;
     private javax.swing.JButton KembaliBT;
+    private javax.swing.JTable barangTB;
     private javax.swing.JButton batalBT;
     private javax.swing.JButton editBT;
     private javax.swing.JButton hapusBT;
@@ -324,12 +432,14 @@ public class ManageBarangView extends javax.swing.JInternalFrame {
     private javax.swing.JTextField idbTF;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField namabTF;
     private javax.swing.JTextField quantitybTF;
     private javax.swing.JButton tambahBT;

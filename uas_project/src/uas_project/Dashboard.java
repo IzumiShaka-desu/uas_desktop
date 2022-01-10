@@ -5,7 +5,8 @@
  */
 package uas_project;
 
-import module_barang.view.BarangView;
+import javax.swing.JPanel;
+import module_barang.view.ManageBarangView;
 
 /**
  *
@@ -20,6 +21,10 @@ public class Dashboard extends javax.swing.JFrame {
         initComponents();
     }
 
+    public JPanel getDesktopP(){
+        return dashboardP;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,8 +48,6 @@ public class Dashboard extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
@@ -192,13 +195,6 @@ public class Dashboard extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Pelanggan");
-
-        jMenuItem2.setText("Menu Pelanggan");
-        jMenu2.add(jMenuItem2);
-
-        jMenuBar1.add(jMenu2);
-
         jMenu3.setText("Transaksi");
 
         jMenuItem3.setText("Menu Transaksi");
@@ -207,6 +203,11 @@ public class Dashboard extends javax.swing.JFrame {
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Keluar");
+        jMenu4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu4ActionPerformed(evt);
+            }
+        });
 
         jMenuItem4.setText("Logout");
         jMenu4.add(jMenuItem4);
@@ -247,10 +248,14 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        BarangView VB = new BarangView();
-        this.dashboardP.add(VB);
-        VB.show();
+        ManageBarangView VMB = new ManageBarangView();
+        this.dashboardP.add(VMB);
+        VMB.show();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenu4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -297,12 +302,10 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel2;
