@@ -5,6 +5,8 @@
  */
 package uas_project;
 
+import com.formdev.flatlaf.FlatLightLaf;
+import javax.swing.UIManager;
 import module_login.controller.LoginController;
 import module_login.view.LoginView;
 import uas_project.Dashboard;
@@ -17,7 +19,11 @@ public class Aplikasi_Fotocopy {
     public static void main (String[]args){
 //    MainApp main = new MainApp();
 //    main.setVisible(true);
-
+try {
+    UIManager.setLookAndFeel( new FlatLightLaf() );
+} catch( Exception ex ) {
+    System.err.println( "Failed to initialize LaF" );
+}
 LoginController lc=LoginController.getInstance(new LoginView());
         lc.getvL().setVisible(true);
 //        Dashboard Halutama = new Dashboard();
