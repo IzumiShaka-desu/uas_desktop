@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 10, 2022 at 02:05 AM
+-- Generation Time: Jan 10, 2022 at 05:31 AM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.10
 
@@ -43,8 +43,10 @@ CREATE TABLE `barang` (
 --
 
 CREATE TABLE `detail_trans` (
-  `id_trans` varchar(1000) NOT NULL,
-  `detail_belanja` varchar(1000) NOT NULL
+  `id_trans` int(11) NOT NULL,
+  `id_barang` int(11) NOT NULL,
+  `harga_barang` int(11) NOT NULL,
+  `jumlah_belanja` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -68,31 +70,15 @@ INSERT INTO `login` (`username`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pelanggan`
---
-
-CREATE TABLE `pelanggan` (
-  `id_pel` int(11) NOT NULL,
-  `nama_pel` varchar(255) NOT NULL,
-  `jenis_kelamin` varchar(255) NOT NULL,
-  `no_hp` varchar(255) NOT NULL,
-  `umur` varchar(255) NOT NULL,
-  `alamat` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `transaksi`
 --
 
 CREATE TABLE `transaksi` (
-  `id_trans` varchar(255) NOT NULL,
-  `id_pel` int(11) NOT NULL,
+  `id_trans` int(11) NOT NULL,
   `id_barang` int(11) NOT NULL,
+  `nama_pel` varchar(255) NOT NULL,
   `tanggal_trans` datetime NOT NULL DEFAULT current_timestamp(),
   `total_belanja` int(11) NOT NULL,
-  `uang_bayar` int(11) NOT NULL,
   `kembalian` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -107,10 +93,17 @@ ALTER TABLE `barang`
   ADD PRIMARY KEY (`id_barang`);
 
 --
--- Indexes for table `pelanggan`
+-- Indexes for table `detail_trans`
 --
-ALTER TABLE `pelanggan`
-  ADD PRIMARY KEY (`id_pel`);
+ALTER TABLE `detail_trans`
+  ADD KEY `id_trans` (`id_trans`),
+  ADD KEY `id_barang` (`id_barang`);
+
+--
+-- Indexes for table `transaksi`
+--
+ALTER TABLE `transaksi`
+  ADD PRIMARY KEY (`id_trans`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -123,10 +116,26 @@ ALTER TABLE `barang`
   MODIFY `id_barang` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `pelanggan`
+-- AUTO_INCREMENT for table `transaksi`
 --
-ALTER TABLE `pelanggan`
-  MODIFY `id_pel` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `transaksi`
+  MODIFY `id_trans` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `detail_trans`
+--
+ALTER TABLE `detail_trans`
+  ADD CONSTRAINT `detail_trans_ibfk_1` FOREIGN KEY (`id_barang`) REFERENCES `barang` (`id_barang`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `transaksi`
+--
+ALTER TABLE `transaksi`
+  ADD CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`id_trans`) REFERENCES `detail_trans` (`id_trans`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
