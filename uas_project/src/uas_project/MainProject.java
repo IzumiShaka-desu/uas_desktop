@@ -4,6 +4,8 @@
  */
 package uas_project;
 
+import module_login.view.LoginView;
+
 /**
  *
  * @author akashaka
@@ -15,6 +17,9 @@ public class MainProject {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
+        LoginView LV = new LoginView();
+        LV.setVisible(true);
     }
     
 }
