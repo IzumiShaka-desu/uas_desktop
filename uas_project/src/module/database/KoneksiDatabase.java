@@ -19,11 +19,11 @@ import java.util.logging.Logger;
  * @author wildan fauzi
  */
 public class KoneksiDatabase {
-    private static Connection conn;
-        private static Properties propert = new Properties();
+        private static Connection conn;
+//        private static Properties propert = new Properties();
         
         private static String driver = "com.mysql.jdbc.Driver"; 
-        private static String url = "jdbc:mysql://localhost:3306/java pos"; 
+        private static String url = "jdbc:mysql://localhost:3306/fotocopy"; 
         private static String username = "root"; 
         private static String password = ""; 
         
