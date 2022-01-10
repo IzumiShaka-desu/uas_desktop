@@ -5,6 +5,9 @@
 package module_login.controller;
 
 import javax.swing.JOptionPane;
+import module_login.model.ModelLogin;
+import module_login.view.LoginView;
+import uas_project.Dashboard;
 
 /**
  *
@@ -12,18 +15,18 @@ import javax.swing.JOptionPane;
  */
 public class LoginController {
      private ModelLogin mL;
-    private ViewLogin vL;
-    private static ControllerLogin single_instance = null;
+    private LoginView vL;
+    private static LoginController single_instance = null;
 
-    private ControllerLogin(ViewLogin vL) {
+    private LoginController(LoginView vL) {
         this.mL = new ModelLogin();
 //        ViewLogin VL = 
         this.vL =vL;
        
     }
-    public static ControllerLogin getInstance(ViewLogin vL) {
+    public static LoginController getInstance(LoginView vL) {
         if (single_instance == null) {
-            single_instance = new ControllerLogin(vL);
+            single_instance = new LoginController(vL);
         }
 
         return single_instance;
@@ -36,7 +39,7 @@ public class LoginController {
         } else {
             vL.setVisible(false);
             this.mL=nML;
-            MainApp mV = new MainApp();
+            Dashboard mV = new Dashboard();
             mV.setVisible(true);
         }
     }
@@ -50,7 +53,7 @@ public class LoginController {
         return mL;
     }
 
-    public ViewLogin getvL() {
+    public LoginView getvL() {
         return vL;
     }
 
