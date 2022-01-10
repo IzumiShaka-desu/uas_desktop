@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package module_barang.model;
-
 import module.database.KoneksiDatabase;
 import module_barang.view.ManageBarangView;
 import java.sql.PreparedStatement;

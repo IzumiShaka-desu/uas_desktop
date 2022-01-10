@@ -1,3 +1,7 @@
 /uas_project/build/
 /uas_project/nbproject/private/
+<<<<<<< HEAD
 /uas_project/dist/
+=======
+uas_project/nbproject/private/private.properties
+>>>>>>> ce387a24136f7e9989e202fa837ef0c4e07cd046
