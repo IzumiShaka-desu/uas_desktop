@@ -5,14 +5,23 @@
 package module_barang.model;
 
 import module.database.KoneksiDatabase;
+import module_barang.view.ManageBarangView;
+import module_barang.view.BarangView;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 /**
  *
  * @author akashaka
  */
 public class ModelBarang {
+    private ManageBarangView VMB;
+    private BarangView VB;
+    
     private String idbarang;
     private String namabarang;
     private String jenisbarang;
@@ -120,5 +129,5 @@ public class ModelBarang {
     
     
     
-    
+        
 }
