@@ -69,8 +69,8 @@ public class ModelBarang {
     }
     
     public void SimpanDataBarang (){
-        String sql = ("INSERT INTO barang (namabarang, jenis, satuan, harga, ukuran)" 
-                + "VALUES ('"+getNamabarang()+"' , '"+getJenis()+"' , '"+getSatuan()+"' , '"+getHarga()+"' , '"+getUkuran()+"' ) " );
+        String sql = ("INSERT INTO barang (nama, jenis, quantity, ukuran, harga)" 
+                + "VALUES ('"+getNamabarang()+"' , '"+getJenisbarang()+"' , '"+getQuantity()+"' , '"+getUkuran()+"' , '"+getHarga()+"' ) " );
    
         try {
             PreparedStatement eksekusi = KoneksiDatabase.getKoneksi().prepareStatement(sql);
@@ -86,13 +86,13 @@ public class ModelBarang {
     
     public void EditDataBarang (){        
         String sql = "UPDATE barang SET namabarang = '"+getNamabarang()+"' " 
-                + ", jenis = '"+getJenis()+"' " 
-                + ", satuan = '"+getSatuan()+"' " 
-                + ", harga = '"+getHarga()+"' " 
-                + ", ukuran = '"+getUkuran()+"' "
-                + " WHERE idb = '"+getIdb()+"' "; 
+                + ", jenis = '"+getJenisbarang()+"' " 
+                + ", satuan = '"+getQuantity()+"' " 
+                + ", harga = '"+getUkuran()+"' " 
+                + ", ukuran = '"+getHarga()+"' "
+                + " WHERE id_barang = '"+getIdbarang()+"' "; 
         try {
-            PreparedStatement eksekusi = KoneksiDB.getKoneksi().prepareStatement(sql);
+            PreparedStatement eksekusi = KoneksiDatabase.getKoneksi().prepareStatement(sql);
             eksekusi.execute();
             
             JOptionPane.showMessageDialog(null, "Data berhasil diUpdate ke dalam Database");
@@ -104,10 +104,10 @@ public class ModelBarang {
     }
     
     public void HapusDataBarang (){
-        String sql = "DELETE FROM barang WHERE idb = '"+getIdb()+"' ";
+        String sql = "DELETE FROM barang WHERE id_barang = '"+getIdbarang()+"' ";
         
         try {
-            PreparedStatement eksekusi = KoneksiDB.getKoneksi().prepareStatement(sql);
+            PreparedStatement eksekusi = KoneksiDatabase.getKoneksi().prepareStatement(sql);
             eksekusi.execute();
             
             JOptionPane.showMessageDialog(null, "Data berhasil dihapus dari Database");
