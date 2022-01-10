@@ -70,7 +70,7 @@ public class ModelBarang {
     
     public void SimpanDataBarang (){
         String sql = ("INSERT INTO barang (namabarang, jenis, satuan, harga, ukuran)" 
-                + "VALUES ('"+getNamabarang()+"' , '"+getJenis()+"' , '"+getSatuan()+"' , '"+getHarga()+"' , '"+getUkuran()+"' ) " );
+                + "VALUES ('"+getNamabarang()+"' , '"+getJenisBarang()+"' , '"+getSatuanbarang()+"' , '"+getHarga()+"' , '"+getUkuran()+"' ) " );
    
         try {
             PreparedStatement eksekusi = KoneksiDatabase.getKoneksi().prepareStatement(sql);
