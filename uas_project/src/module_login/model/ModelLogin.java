@@ -43,7 +43,7 @@ public class ModelLogin {
     }
     
     public ModelLogin login(String username, String password) {
-        String sql = ("select * from user where username='" + username + "' and password='" + password + "'");
+        String sql = ("select * from login where username='" + username + "' and password='" + password + "'");
 
         try {
             Statement stat = (Statement) KoneksiDatabase.getKoneksi().createStatement();

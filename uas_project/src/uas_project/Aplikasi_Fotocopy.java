@@ -5,6 +5,7 @@
  */
 package uas_project;
 
+import module_login.controller.LoginController;
 import module_login.view.LoginView;
 import uas_project.Dashboard;
 
@@ -17,10 +18,9 @@ public class Aplikasi_Fotocopy {
 //    MainApp main = new MainApp();
 //    main.setVisible(true);
 
-//        LoginView VL = new LoginView();
-//        VL.setVisible(true);
-        
-        Dashboard Halutama = new Dashboard();
-        Halutama.setVisible(true);
+LoginController lc=LoginController.getInstance(new LoginView());
+        lc.getvL().setVisible(true);
+//        Dashboard Halutama = new Dashboard();
+//        Halutama.setVisible(true);
    }
 }
