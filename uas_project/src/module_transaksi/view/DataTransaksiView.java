@@ -13,59 +13,70 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import module.database.KoneksiDatabase;
+import com.toedter.calendar.JDateChooser;
 
 /**
  *
  * @author wildan fauzi
  */
 public class DataTransaksiView extends javax.swing.JInternalFrame {
-
+        private String sql = "";
         private TransaksiView VT;
         private DefaultTableModel Tabel;
+        private JDateChooser chooser;
     /**
      * Creates new form DataTransaksiView
      */
-    public DataTransaksiView(TransaksiView VT) {
+    //public DataTransaksiView(TransaksiView VT) {
+    public DataTransaksiView() {
         initComponents();
-        this.VT = VT;
+//        this.VT = VT;
         Tabel = new DefaultTableModel();
         transaksiTB.setModel(Tabel);
         Tabel.addColumn("Id Transaksi");
         Tabel.addColumn("Nama Barang");
         Tabel.addColumn("Nama Pelanggan");
-        Tabel.addColumn("Tanggal Transaksi ");
+        Tabel.addColumn("Tanggal Transaksi");
         Tabel.addColumn("Total Belanja");
+        Tabel.addColumn("Uang Bayar");
         Tabel.addColumn("Kembalian");
-        TampilDataTrans();
+        TampilDataTrans(title);
     }
 
 
 
-    private void TampilDataTrans (){
+    private void TampilDataTrans (String cari){
         Tabel.getDataVector().removeAllElements();
         Tabel.fireTableDataChanged();
         
-        String sql = "SELECT * FROM transaksi INNER JOIN barang ON transaksi.id_barang = barang.id_barang INNER JOIN detail_trans ON transaksi.id_trans = detail_trans.id_trans ORDER BY id_trans DESC";
+        if(cari.equals("")){
+            sql = "SELECT * FROM detail_trans INNER JOIN barang ON detail_trans.id_barang = barang.id_barang INNER JOIN transaksi ON detail_trans.id_trans = transaksi.id_trans ORDER BY detail_trans.id_trans DESC";
+        }
+        else {
+            sql = "SELECT * FROM detail_trans INNER JOIN barang ON detail_trans.id_barang = barang.id_barang INNER JOIN transaksi ON detail_trans.id_trans = transaksi.id_trans ORDER BY detail_trans.id_trans DESC WHERE transaksi.tanggal_trans  ";
+        }
+        
+//        String sql = "SELECT * FROM detail_trans INNER JOIN barang ON detail_trans.id_barang = barang.id_barang INNER JOIN transaksi ON detail_trans.id_trans = transaksi.id_trans ORDER BY detail_trans.id_trans DESC";
         try {
             Statement stat = (Statement) KoneksiDatabase.getKoneksi().createStatement();
             ResultSet res  = stat.executeQuery(sql);
             
             while (res.next()){
                 Object[] hasil;
-                hasil = new Object[6];
+                hasil = new Object[7];
                 hasil[0] = res.getString("id_trans");
                 hasil[1] = res.getString("nama");
                 hasil[2] = res.getString("nama_pel");
-                hasil[3] = res.getString("tgl_trans");
+                hasil[3] = res.getString("tanggal_trans");
                 hasil[4] = res.getString("total_belanja");
-                hasil[5] = res.getString("kembalian");
+                hasil[5] = res.getString("uang_bayar");
+                hasil[6] = res.getString("kembalian");
                 
                 Tabel.addRow(hasil);
-                
             }
-            
+            JOptionPane.showMessageDialog(null, "Suskes menampilkan data transaksi");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Tidak dapat menampilkan data transaksi");
+            JOptionPane.showMessageDialog(null, "Tidak dapat menampilkan data transaksi" + ex);
 //            Logger.getLogger(ViewPelanggan.class.getName()).log(Level.SEVERE, null, ex);
         }  
     }
@@ -80,10 +91,22 @@ public class DataTransaksiView extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jLabel2 = new javax.swing.JLabel();
         transaksiTB = new javax.swing.JTable();
+        jScrollPane1 = new javax.swing.JScrollPane();
         jLabel1 = new javax.swing.JLabel();
-        kembaliBT = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        cariBT = new javax.swing.JButton();
+        datechoosDC1 = new com.toedter.calendar.JDateChooser();
+        datechoosDC2 = new com.toedter.calendar.JDateChooser();
+
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel2.setText("Cari Tanggal");
 
         transaksiTB.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -96,35 +119,78 @@ public class DataTransaksiView extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(transaksiTB);
+
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel1.setText("Data Transaksi");
+
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel4.setText("-");
+
+        cariBT.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        cariBT.setText("Cari");
+        cariBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cariBTActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 718, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(314, 314, 314)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addComponent(jLabel2)
+                        .addGap(52, 52, 52)
+                        .addComponent(datechoosDC1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(datechoosDC2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38)
+                        .addComponent(cariBT)))
+                .addContainerGap(162, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 718, Short.MAX_VALUE)
+                    .addContainerGap()))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(transaksiTB, javax.swing.GroupLayout.PREFERRED_SIZE, 716, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(29, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(32, 32, 32)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(datechoosDC2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel4)
+                        .addComponent(cariBT))
+                    .addComponent(datechoosDC1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(370, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(136, 136, 136)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(49, Short.MAX_VALUE)))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(transaksiTB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
-
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel1.setText("Data Transaksi");
-
-        kembaliBT.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        kembaliBT.setText("Kembali");
-        kembaliBT.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kembaliBTActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -132,28 +198,13 @@ public class DataTransaksiView extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(kembaliBT)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addGap(313, 313, 313))))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(19, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(kembaliBT)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -161,17 +212,22 @@ public class DataTransaksiView extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void kembaliBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kembaliBTActionPerformed
+    private void cariBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cariBTActionPerformed
         // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_kembaliBTActionPerformed
+        
+        
+    }//GEN-LAST:event_cariBTActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cariBT;
+    private com.toedter.calendar.JDateChooser datechoosDC1;
+    private com.toedter.calendar.JDateChooser datechoosDC2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton kembaliBT;
     private javax.swing.JTable transaksiTB;
     // End of variables declaration//GEN-END:variables
 }

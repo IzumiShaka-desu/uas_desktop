@@ -67,10 +67,10 @@ public class TransaksiView extends javax.swing.JInternalFrame {
         return jQty;
     }
 
-    private void Datatransaksi() {
-        DataTransaksiView VDT = new DataTransaksiView(this);
-        VDT.setVisible(true);
-    }
+//    private void Datatransaksi() {
+//        DataTransaksiView VDT = new DataTransaksiView(this);
+//        VDT.setVisible(true);
+//    }
 
     Boolean tampil = true;
 
