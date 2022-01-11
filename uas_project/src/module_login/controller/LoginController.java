@@ -14,7 +14,7 @@ import uas_project.Dashboard;
  * @author akashaka
  */
 public class LoginController {
-     private ModelLogin mL;
+    private ModelLogin mL;
     private LoginView vL;
     private static LoginController single_instance = null;
 
@@ -35,7 +35,7 @@ public class LoginController {
     public void Login() {
         ModelLogin nML=mL.login(vL.getUsername().getText(), vL.getPassword().getText()) ;
         if (nML== null) {
-            JOptionPane.showMessageDialog(null, "data login tidak ditemukan");
+            JOptionPane.showMessageDialog(null, "Data login tidak ditemukan");
         } else {
             vL.setVisible(false);
             this.mL=nML;

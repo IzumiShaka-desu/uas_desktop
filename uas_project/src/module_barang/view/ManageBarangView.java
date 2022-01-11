@@ -26,6 +26,7 @@ public class ManageBarangView extends javax.swing.JInternalFrame {
 
     private ManageBarangController CB;
     private DefaultTableModel tabel;
+    private String sql = "";
 
     /**
      * Creates new form ManageBarangView
@@ -43,10 +44,12 @@ public class ManageBarangView extends javax.swing.JInternalFrame {
         tabel.addColumn("Ukuran Barang");
         tabel.addColumn("Harga Barang");
         
-        TampilDataPel();
+        TampilDataBarang(title);
         CB.kontrol();
     }
 
+    Boolean tampil = true;
+    
     public ManageBarangController getCB() {
         return CB;
     }
@@ -116,11 +119,17 @@ public class ManageBarangView extends javax.swing.JInternalFrame {
         CB.kontroldua();
     }
     
-    private void TampilDataPel (){
+    private void TampilDataBarang (String cari){
         tabel.getDataVector().removeAllElements();
         tabel.fireTableDataChanged();
         
-        String sql = "SELECT * FROM barang ";
+        if(cari.equals("")){
+            sql = "SELECT * FROM barang";
+        }
+        else {
+            sql = "SELECT * FROM barang WHERE nama LIKE '"+cari+"%' ";
+        }
+        
         try {
             Statement stat = (Statement) KoneksiDatabase.getKoneksi().createStatement();
             ResultSet res  = stat.executeQuery(sql);
@@ -144,6 +153,36 @@ public class ManageBarangView extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Tidak dapat menampilkan tabel \n" + ex);
         }  
     }
+    
+    
+//    private void TampilDataPel (){
+//        tabel.getDataVector().removeAllElements();
+//        tabel.fireTableDataChanged();
+//        
+//        String sql = "SELECT * FROM barang ";
+//        try {
+//            Statement stat = (Statement) KoneksiDatabase.getKoneksi().createStatement();
+//            ResultSet res  = stat.executeQuery(sql);
+//            
+//            while (res.next()){
+//                Object[] hasil;
+//                hasil = new Object[6];
+//                hasil[0] = res.getString("id_barang");
+//                hasil[1] = res.getString("nama");
+//                hasil[2] = res.getString("jenis");
+//                hasil[3] = res.getString("quantity");
+//                hasil[4] = res.getString("ukuran");
+//                hasil[5] = res.getString("harga");
+//                
+//                tabel.addRow(hasil);
+//                
+//            }
+//            
+//        } catch (SQLException ex) {
+////            Logger.getLogger(ViewPelanggan.class.getName()).log(Level.SEVERE, null, ex);
+//            JOptionPane.showMessageDialog(null, "Tidak dapat menampilkan tabel \n" + ex);
+//        }  
+//    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -171,11 +210,15 @@ public class ManageBarangView extends javax.swing.JInternalFrame {
         namabTF = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         idbTF = new javax.swing.JTextField();
+        tampildataBT = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         KembaliBT = new javax.swing.JButton();
+        databarangPN = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         barangTB = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
+        cariTF = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
 
         hapusBT.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         hapusBT.setText("Hapus Data");
@@ -220,7 +263,7 @@ public class ManageBarangView extends javax.swing.JInternalFrame {
         ukuranbTF.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jLabel6.setText("Quantity Barang");
+        jLabel6.setText("Stok Barang");
 
         quantitybTF.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
 
@@ -240,13 +283,21 @@ public class ManageBarangView extends javax.swing.JInternalFrame {
         idbTF.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         idbTF.setEnabled(false);
 
+        tampildataBT.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        tampildataBT.setText("Tampil Data");
+        tampildataBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tampildataBTActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(64, 64, 64)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -262,16 +313,20 @@ public class ManageBarangView extends javax.swing.JInternalFrame {
                             .addComponent(JenisbTF, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(quantitybTF, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ukuranbTF, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(hargabTF, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(hargabTF, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(editBT, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tambahBT))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(batalBT, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(hapusBT, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(53, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(tampildataBT, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(hapusBT, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(26, 26, 26))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -307,8 +362,9 @@ public class ManageBarangView extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(editBT)
-                    .addComponent(hapusBT))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(hapusBT)
+                    .addComponent(tampildataBT))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
@@ -343,6 +399,52 @@ public class ManageBarangView extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel3.setText("Data Barang");
 
+        cariTF.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        cariTF.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cariTFKeyPressed(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel9.setText("Cari Barang");
+
+        javax.swing.GroupLayout databarangPNLayout = new javax.swing.GroupLayout(databarangPN);
+        databarangPN.setLayout(databarangPNLayout);
+        databarangPNLayout.setHorizontalGroup(
+            databarangPNLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(databarangPNLayout.createSequentialGroup()
+                .addGroup(databarangPNLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(databarangPNLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE))
+                    .addGroup(databarangPNLayout.createSequentialGroup()
+                        .addGroup(databarangPNLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(databarangPNLayout.createSequentialGroup()
+                                .addGap(173, 173, 173)
+                                .addComponent(jLabel3))
+                            .addGroup(databarangPNLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(56, 56, 56)
+                                .addComponent(cariTF, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        databarangPNLayout.setVerticalGroup(
+            databarangPNLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, databarangPNLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(16, 16, 16)
+                .addGroup(databarangPNLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(cariTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(69, 69, 69))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -350,37 +452,36 @@ public class ManageBarangView extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(KembaliBT))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(KembaliBT))
+                                .addGap(18, 18, 18)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(129, 129, 129)
-                                .addComponent(jLabel1)
-                                .addGap(219, 219, 219)
-                                .addComponent(jLabel3)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addComponent(jLabel1)))
+                        .addGap(18, 18, 18)
+                        .addComponent(databarangPN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(KembaliBT)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel3))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(17, 17, 17))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(databarangPN, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -389,7 +490,7 @@ public class ManageBarangView extends javax.swing.JInternalFrame {
     private void hapusBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusBTActionPerformed
         // TODO add your handling code here:
         CB.Delete();
-        TampilDataPel();
+        TampilDataBarang(title);
     }//GEN-LAST:event_hapusBTActionPerformed
 
     private void batalBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalBTActionPerformed
@@ -401,13 +502,13 @@ public class ManageBarangView extends javax.swing.JInternalFrame {
     private void tambahBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahBTActionPerformed
         // TODO add your handling code here:
         CB.simpan();
-        TampilDataPel();
+        TampilDataBarang(title);
     }//GEN-LAST:event_tambahBTActionPerformed
 
     private void editBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBTActionPerformed
         // TODO add your handling code here:
         CB.Update();
-        TampilDataPel();
+        TampilDataBarang(title);
     }//GEN-LAST:event_editBTActionPerformed
 
     private void KembaliBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KembaliBTActionPerformed
@@ -420,12 +521,26 @@ public class ManageBarangView extends javax.swing.JInternalFrame {
         AmbilDataTabel();
     }//GEN-LAST:event_barangTBMouseClicked
 
+    private void tampildataBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tampildataBTActionPerformed
+        // TODO add your handling code here:
+        tampil = !tampil;
+        databarangPN.setVisible(tampil);
+        TampilDataBarang(title);
+    }//GEN-LAST:event_tampildataBTActionPerformed
+
+    private void cariTFKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cariTFKeyPressed
+        // TODO add your handling code here:
+        TampilDataBarang(cariTF.getText());
+    }//GEN-LAST:event_cariTFKeyPressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField JenisbTF;
     private javax.swing.JButton KembaliBT;
     private javax.swing.JTable barangTB;
     private javax.swing.JButton batalBT;
+    private javax.swing.JTextField cariTF;
+    private javax.swing.JPanel databarangPN;
     private javax.swing.JButton editBT;
     private javax.swing.JButton hapusBT;
     private javax.swing.JTextField hargabTF;
@@ -438,11 +553,13 @@ public class ManageBarangView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField namabTF;
     private javax.swing.JTextField quantitybTF;
     private javax.swing.JButton tambahBT;
+    private javax.swing.JButton tampildataBT;
     private javax.swing.JTextField ukuranbTF;
     // End of variables declaration//GEN-END:variables
 }

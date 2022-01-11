@@ -177,9 +177,9 @@ public class Dashboard extends javax.swing.JFrame {
         this.dashboardP.add(VB);
         VB.show();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
-
-
-
+    
+    
+            
     /**
      * @param args the command line arguments
      */
