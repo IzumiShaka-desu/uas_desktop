@@ -59,10 +59,6 @@ public class ManageBarangView extends javax.swing.JInternalFrame {
         return JenisbTF;
     }
 
-    public JButton getKembali() {
-        return KembaliBT;
-    }
-
     public JButton getBatal() {
         return batalBT;
     }
@@ -212,13 +208,17 @@ public class ManageBarangView extends javax.swing.JInternalFrame {
         idbTF = new javax.swing.JTextField();
         tampildataBT = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        KembaliBT = new javax.swing.JButton();
         databarangPN = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         barangTB = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         cariTF = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
+
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
 
         hapusBT.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         hapusBT.setText("Hapus Data");
@@ -370,14 +370,6 @@ public class ManageBarangView extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel1.setText("Manage Barang");
 
-        KembaliBT.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        KembaliBT.setText("Kembali");
-        KembaliBT.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                KembaliBTActionPerformed(evt);
-            }
-        });
-
         barangTB.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -452,36 +444,27 @@ public class ManageBarangView extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(KembaliBT))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(129, 129, 129)
-                                .addComponent(jLabel1)))
                         .addGap(18, 18, 18)
-                        .addComponent(databarangPN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(129, 129, 129)
+                        .addComponent(jLabel1)))
+                .addGap(18, 18, 18)
+                .addComponent(databarangPN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(KembaliBT)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(17, 17, 17))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(databarangPN, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(53, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addComponent(databarangPN, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -511,11 +494,6 @@ public class ManageBarangView extends javax.swing.JInternalFrame {
         TampilDataBarang(title);
     }//GEN-LAST:event_editBTActionPerformed
 
-    private void KembaliBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KembaliBTActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_KembaliBTActionPerformed
-
     private void barangTBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_barangTBMouseClicked
         // TODO add your handling code here:
         AmbilDataTabel();
@@ -536,7 +514,6 @@ public class ManageBarangView extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField JenisbTF;
-    private javax.swing.JButton KembaliBT;
     private javax.swing.JTable barangTB;
     private javax.swing.JButton batalBT;
     private javax.swing.JTextField cariTF;

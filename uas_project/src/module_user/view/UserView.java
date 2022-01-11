@@ -84,7 +84,11 @@ public class UserView extends javax.swing.JInternalFrame {
         editBT = new javax.swing.JButton();
         batalBT = new javax.swing.JButton();
         passwordTF = new javax.swing.JTextField();
-        kembaliBT = new javax.swing.JButton();
+
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel1.setText("Admin");
@@ -113,13 +117,6 @@ public class UserView extends javax.swing.JInternalFrame {
 
         passwordTF.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
-        kembaliBT.setText("Kembali");
-        kembaliBT.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kembaliBTActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -139,23 +136,16 @@ public class UserView extends javax.swing.JInternalFrame {
                     .addComponent(passwordTF, javax.swing.GroupLayout.Alignment.LEADING))
                 .addGap(40, 40, 40))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(kembaliBT))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(141, 141, 141)
-                        .addComponent(jLabel1)))
+                .addGap(141, 141, 141)
+                .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(kembaliBT)
-                .addGap(13, 13, 13)
+                .addGap(47, 47, 47)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(usernameTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
@@ -194,11 +184,6 @@ public class UserView extends javax.swing.JInternalFrame {
         CU.Update();
     }//GEN-LAST:event_editBTActionPerformed
 
-    private void kembaliBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kembaliBTActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_kembaliBTActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton batalBT;
@@ -207,7 +192,6 @@ public class UserView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JButton kembaliBT;
     private javax.swing.JTextField passwordTF;
     private javax.swing.JTextField usernameTF;
     // End of variables declaration//GEN-END:variables

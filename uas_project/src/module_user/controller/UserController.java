@@ -17,11 +17,12 @@ public class UserController {
     private UserView VU;
     
     public UserController(UserView VU){
-    this.VU = VU;
+        this.VU = VU;
+        this.MU = MU;
     }
     
     public void Update(){
-        MU = new UserModel();
+        MU = new UserModel(MU.getUsername() , MU.getUsername());
         MU.setUsername(VU.getUsername().getText());
         MU.setPassword(VU.getPassword().getText());
         

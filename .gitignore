@@ -4,4 +4,11 @@
 /uas_project/dist/
 =======
 uas_project/nbproject/private/private.properties
+<<<<<<< HEAD
+uas_project/nbproject/private/private.properties
+uas_project/nbproject/private/private.properties
+.gitignore
+=======
 >>>>>>> ce387a24136f7e9989e202fa837ef0c4e07cd046
+>>>>>>> 88c214f7d2efe883179ecc19ddd8c138340c2b47
+uas_project/src/module/database/KoneksiDatabase.java
