@@ -52,9 +52,8 @@ public class ViewListDataBarang extends javax.swing.JFrame {
         if (data.equals("")) {
             sql = "SELECT * FROM barang";
         } else {
-            sql = "SELECT * FROM barang WHERE nama_barang LIKE '" + data + "%' ";
+            sql = "SELECT * FROM barang WHERE nama LIKE '" + data + "%' ";
         }
-
         try {
             Statement stat = (Statement) KoneksiDatabase.getKoneksi().createStatement();
             ResultSet res = stat.executeQuery(sql);
