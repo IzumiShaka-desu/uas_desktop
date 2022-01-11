@@ -4,6 +4,7 @@
  */
 package module_transaksi.view;
 
+import java.awt.event.ActionEvent;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -43,7 +44,7 @@ public class TransaksiView extends javax.swing.JInternalFrame {
         dTB.addColumn("qty beli");
         dTB.addColumn("subtotal");
 
-        jTable1.setModel(dTB);
+        transaksiTB.setModel(dTB);
     }
 
     public JTextField getIdTextField() {
@@ -81,6 +82,7 @@ public class TransaksiView extends javax.swing.JInternalFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
     // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -109,9 +111,11 @@ public class TransaksiView extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         juang = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
+        TampiltabelBT = new javax.swing.JButton();
+        tabelPN = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         transaksiTB = new javax.swing.JTable();
-        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -125,7 +129,7 @@ public class TransaksiView extends javax.swing.JInternalFrame {
         jTextField2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jLabel3.setText("Nama Pelanggan");
+        jLabel3.setText("Nama Pembeli");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -285,9 +289,9 @@ public class TransaksiView extends javax.swing.JInternalFrame {
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton3)
-                                .addContainerGap(11, Short.MAX_VALUE)));
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Barang",
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Transaksi",
                 javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION,
                 new java.awt.Font("Times New Roman", 0, 14))); // NOI18N
 
@@ -333,7 +337,7 @@ public class TransaksiView extends javax.swing.JInternalFrame {
         TampiltabelBT.setText("Tampil Keranjang");
         TampiltabelBT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TampiltabelBTActionPerformed(evt);
+                // TampiltabelBTActionPerformed(evt);
             }
         });
 
@@ -396,8 +400,8 @@ public class TransaksiView extends javax.swing.JInternalFrame {
                 }));
         jScrollPane2.setViewportView(transaksiTB);
 
-        jLabel12.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jLabel12.setText("Data Keranjang Belanja");
+        jLabel13.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel13.setText("Data Keranjang Belanja");
 
         javax.swing.GroupLayout tabelPNLayout = new javax.swing.GroupLayout(tabelPN);
         tabelPN.setLayout(tabelPNLayout);
@@ -410,13 +414,13 @@ public class TransaksiView extends javax.swing.JInternalFrame {
                                 .addContainerGap())
                         .addGroup(tabelPNLayout.createSequentialGroup()
                                 .addGap(29, 29, 29)
-                                .addComponent(jLabel12)
+                                .addComponent(jLabel13)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
         tabelPNLayout.setVerticalGroup(
                 tabelPNLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabelPNLayout.createSequentialGroup()
-                                .addContainerGap(17, Short.MAX_VALUE)
-                                .addComponent(jLabel12)
+                                .addContainerGap(22, Short.MAX_VALUE)
+                                .addComponent(jLabel13)
                                 .addGap(18, 18, 18)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 266,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -439,7 +443,7 @@ public class TransaksiView extends javax.swing.JInternalFrame {
         jMenuItem1.setText("Kembali");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                // jMenuItem1ActionPerformed(evt);
             }
         });
         jMenu2.add(jMenuItem1);
@@ -471,7 +475,7 @@ public class TransaksiView extends javax.swing.JInternalFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE,
                                                 javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 504,
+                                        .addComponent(tabelPN, javax.swing.GroupLayout.PREFERRED_SIZE, 504,
                                                 Short.MAX_VALUE))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
         layout.setVerticalGroup(
@@ -480,7 +484,8 @@ public class TransaksiView extends javax.swing.JInternalFrame {
                                 .addContainerGap()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 329,
+                                                .addComponent(tabelPN, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
                                                         javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(18, 18, 18)
                                                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE,
@@ -494,7 +499,7 @@ public class TransaksiView extends javax.swing.JInternalFrame {
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE,
                                                         javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addContainerGap()));
+                                .addContainerGap(58, Short.MAX_VALUE)));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -516,7 +521,7 @@ public class TransaksiView extends javax.swing.JInternalFrame {
         dTB.addColumn("qty beli");
         dTB.addColumn("subtotal");
 
-        jTable1.setModel(dTB);
+        transaksiTB.setModel(dTB);
     }
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -731,6 +736,7 @@ public class TransaksiView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel7;
@@ -747,11 +753,12 @@ public class TransaksiView extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField jQty;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTot;
     private javax.swing.JTextField jTotB;
     private javax.swing.JTextField juang;
+    private javax.swing.JPanel tabelPN;
+    private javax.swing.JTable transaksiTB;
     // End of variables declaration//GEN-END:variables
 
 }

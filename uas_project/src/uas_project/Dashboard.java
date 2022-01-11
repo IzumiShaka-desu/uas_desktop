@@ -6,7 +6,8 @@
 package uas_project;
 
 import javax.swing.JFrame;
-import module_barang.view.BarangView;
+import javax.swing.JPanel;
+import module_barang.view.ManageBarangView;
 import module_transaksi.view.TransaksiView;
 
 /**
