@@ -5,7 +5,6 @@
 package module_barang.model;
 import module.database.KoneksiDatabase;
 import module_barang.view.ManageBarangView;
-import module_barang.view.BarangView;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,7 +18,7 @@ import javax.swing.JOptionPane;
  */
 public class ModelBarang {
     private ManageBarangView VMB;
-    private BarangView VB;
+
     
     private String idbarang;
     private String namabarang;
@@ -93,11 +92,11 @@ public class ModelBarang {
     }
     
     public void EditDataBarang (){        
-        String sql = "UPDATE barang SET namabarang = '"+getNamabarang()+"' " 
+        String sql = "UPDATE barang SET nama = '"+getNamabarang()+"' " 
                 + ", jenis = '"+getJenisbarang()+"' " 
-                + ", satuan = '"+getQuantity()+"' " 
-                + ", harga = '"+getUkuran()+"' " 
-                + ", ukuran = '"+getHarga()+"' "
+                + ", quantity = '"+getQuantity()+"' " 
+                + ", ukuran = '"+getUkuran()+"' " 
+                + ", harga = '"+getHarga()+"' "
                 + " WHERE id_barang = '"+getIdbarang()+"' "; 
         try {
             PreparedStatement eksekusi = KoneksiDatabase.getKoneksi().prepareStatement(sql);
