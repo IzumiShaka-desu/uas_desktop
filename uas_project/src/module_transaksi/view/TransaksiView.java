@@ -414,10 +414,10 @@ public class TransaksiView extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-       
+
     }//GEN-LAST:event_jButton2ActionPerformed
-void clearAll(){
- jTotB.setText("");
+    void clearAll() {
+        jTotB.setText("");
         juang.setText("");
         clearForm();
         jKem.setText("");
@@ -429,7 +429,8 @@ void clearAll(){
         dTB.addColumn("subtotal");
 
         jTable1.setModel(dTB);
-}
+    }
+
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
     }// GEN-LAST:event_jMenuItem2ActionPerformed
@@ -482,40 +483,46 @@ void clearAll(){
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        try {
-            int indexAdded = getIndexSimmilarItem(jIdtxt.getText());
-            boolean isItemAlreadyAdded = indexAdded >= 0;
-            if (isItemAlreadyAdded) {
-                int totalAlreadyAdded = Integer.parseInt((String) dTB.getValueAt(indexAdded, 3));
-                int subTotalAlreadyAdded = Integer.parseInt((String) dTB.getValueAt(indexAdded, 4));
-                String total = jTot.getText();
-                String qty = jQty.getText();
-                Integer allTotalQty = totalAlreadyAdded + Integer.parseInt(qty);
-                Integer allSubtotal = Integer.parseInt(total) + subTotalAlreadyAdded;
-                dTB.setValueAt(allTotalQty + "", indexAdded, 3);
-                dTB.setValueAt(allSubtotal + "", indexAdded, 4);
-                hitungTotal();
-                hitungKembalian();
-                clearForm();
-            } else {
-                String idBar = jIdtxt.getText();
-                String nameBar = jNameTxt.getText();
-                String harBar = jHbar.getText();
-                String total = jTot.getText();
-                String qty = jQty.getText();
-                Object[] newRow = new Object[5];
-                newRow[0] = idBar;
-                newRow[1] = nameBar;
-                newRow[2] = harBar;
-                newRow[3] = qty;
-                newRow[4] = total;
-                dTB.addRow(newRow);
-                hitungTotal();
-                hitungKembalian();
-                clearForm();
+        if (jTot.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane,"qty tidak boleh kosong");
+        } else {
 
+            try {
+                int indexAdded = getIndexSimmilarItem(jIdtxt.getText());
+                boolean isItemAlreadyAdded = indexAdded >= 0;
+                if (isItemAlreadyAdded) {
+                    int totalAlreadyAdded = Integer.parseInt((String) dTB.getValueAt(indexAdded, 3));
+                    int subTotalAlreadyAdded = Integer.parseInt((String) dTB.getValueAt(indexAdded, 4));
+                    String total = jTot.getText();
+                    String qty = jQty.getText();
+                    Integer allTotalQty = totalAlreadyAdded + Integer.parseInt(qty);
+                    Integer allSubtotal = Integer.parseInt(total) + subTotalAlreadyAdded;
+                    dTB.setValueAt(allTotalQty + "", indexAdded, 3);
+                    dTB.setValueAt(allSubtotal + "", indexAdded, 4);
+                    hitungTotal();
+                    hitungKembalian();
+                    clearForm();
+                } else {
+                    String idBar = jIdtxt.getText();
+                    String nameBar = jNameTxt.getText();
+                    String harBar = jHbar.getText();
+                    String total = jTot.getText();
+                    String qty = jQty.getText();
+                    Object[] newRow = new Object[5];
+                    newRow[0] = idBar;
+                    newRow[1] = nameBar;
+                    newRow[2] = harBar;
+                    newRow[3] = qty;
+                    newRow[4] = total;
+                    dTB.addRow(newRow);
+                    hitungTotal();
+                    hitungKembalian();
+                    clearForm();
+
+                }
+
+            } catch (Exception e) {
             }
-        } catch (Exception e) {
         }
         // dTB.addColumn("id barang");
         // dTB.addColumn("nama barang");
@@ -534,7 +541,7 @@ void clearAll(){
 //(@last_id_in_table1 , '2', '1500', '4')
         //INSERT INTO `transaksi` (`id_trans`, `nama_pel`, `tanggal_trans`, `total_belanja`, `kembalian`)
 //VALUES (NULL, 'jksq', CURRENT_TIMESTAMP, '12000', '0');
-        if (dTB.getRowCount() >0 && !jTextField2.getText().isEmpty()) {
+        if (dTB.getRowCount() > 0 && !jTextField2.getText().isEmpty()&& !juang.getText().isEmpty()) {
             String nama_pelanggan = "no name";
             if (!jTextField2.getText().isEmpty()) {
                 nama_pelanggan = jTextField2.getText();
@@ -561,8 +568,8 @@ void clearAll(){
                     System.out.println("Last Inserted ID = " + rs.getLong(1));
                     PreparedStatement eksekusi = KoneksiDatabase.getKoneksi().prepareStatement(sql);
                     eksekusi.execute();
-                      clearForm();
-                     clearAll();
+                    clearForm();
+                    clearAll();
                     JOptionPane.showMessageDialog(null, "Data berhasil disimpan ke dalam Database");
 
                 }
@@ -572,7 +579,7 @@ void clearAll(){
                 JOptionPane.showMessageDialog(null, "Data gagal disimpan ke dalam Database \n" + ex + "\n" + sql);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "nama pelanggan dan daftar barang wajib diisi");
+            JOptionPane.showMessageDialog(null, "semua text field wajib diisi");
 
         }
 
