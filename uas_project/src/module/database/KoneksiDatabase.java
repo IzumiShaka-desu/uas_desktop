@@ -23,9 +23,9 @@ public class KoneksiDatabase {
     // private static Properties propert = new Properties();
 
     private static String driver = "com.mysql.jdbc.Driver";
-    private static String url = "jdbc:mysql://localhost:8889/fotocopy";
+    private static String url = "jdbc:mysql://localhost:3306/fotocopy";
     private static String username = "root";
-    private static String password = "root";
+    private static String password = "";
 
     public static Connection getKoneksi() throws SQLException {
         if (conn == null) {

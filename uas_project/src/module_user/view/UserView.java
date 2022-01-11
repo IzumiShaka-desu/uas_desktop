@@ -28,9 +28,10 @@ public class UserView extends javax.swing.JInternalFrame {
      */
     public UserView() {
         initComponents();
-//        TampilDataUser();
+        CU = new UserController(this);
+        TampilDataUser();
     }
-
+    
     public JButton getBatal() {
         return batalBT;
     }
@@ -47,25 +48,33 @@ public class UserView extends javax.swing.JInternalFrame {
         return usernameTF;
     }
 
+    public JTextField getIdlogin() {
+        return idloginTF;
+    }
+
+    
     public void clear(){
         usernameTF.setText("");
         passwordTF.setText("");
     }
     
-//    private void TampilDataUser (){
-//        String sql = "SELECT * FROM login WHERE username = 'admin' ";
-//        try {
-//            Statement stat = (Statement) KoneksiDatabase.getKoneksi().createStatement();
-//            ResultSet res  = stat.executeQuery(sql);
-//        
-//            usernameTF.setText(res.getString("username"));
-//            passwordTF.setText(res.getString("password"));
-//            
-//        } catch (SQLException ex) {
-////            Logger.getLogger(ViewPelanggan.class.getName()).log(Level.SEVERE, null, ex);
-//            JOptionPane.showMessageDialog(null, "Tidak dapat menampilkan username atau password \n" + ex);
-//        }  
-//    }
+    public void TampilDataUser (){
+        String sql = "SELECT * FROM login WHERE id_login = '1' ";
+        try {
+            Statement stat = (Statement) KoneksiDatabase.getKoneksi().createStatement();
+            ResultSet res  = stat.executeQuery(sql);
+        
+            while (res.next()){
+                idloginTF.setText(res.getString("id_login"));
+                usernameTF.setText(res.getString("username"));
+                passwordTF.setText(res.getString("password"));
+            }
+            JOptionPane.showMessageDialog(null, "Sukses menampilkan username dan password \n" );
+        } catch (SQLException ex) {
+//            Logger.getLogger(ViewPelanggan.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Tidak dapat menampilkan username atau password \n" + ex);
+        }  
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -84,6 +93,8 @@ public class UserView extends javax.swing.JInternalFrame {
         editBT = new javax.swing.JButton();
         batalBT = new javax.swing.JButton();
         passwordTF = new javax.swing.JTextField();
+        idloginTF = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -117,15 +128,21 @@ public class UserView extends javax.swing.JInternalFrame {
 
         passwordTF.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
+        idloginTF.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel4.setText("ID");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(53, 53, 53)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -133,19 +150,24 @@ public class UserView extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                         .addComponent(editBT))
                     .addComponent(usernameTF, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(passwordTF, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(passwordTF, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(idloginTF, javax.swing.GroupLayout.Alignment.LEADING))
                 .addGap(40, 40, 40))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(141, 141, 141)
+                .addGap(134, 134, 134)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
+                .addGap(25, 25, 25)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(idloginTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(usernameTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
@@ -188,9 +210,11 @@ public class UserView extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton batalBT;
     private javax.swing.JButton editBT;
+    private javax.swing.JTextField idloginTF;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField passwordTF;
     private javax.swing.JTextField usernameTF;

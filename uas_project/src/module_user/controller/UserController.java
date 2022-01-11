@@ -18,17 +18,28 @@ public class UserController {
     
     public UserController(UserView VU){
         this.VU = VU;
-        this.MU = MU;
+//        this.MU = MU;
+    }
+    
+    public UserView getVU(){
+        return VU;
+    }
+    
+    public UserModel getMU(){
+        return MU;
     }
     
     public void Update(){
-        MU = new UserModel(MU.getUsername() , MU.getUsername());
+        MU = new UserModel();
+        MU.setId_login(VU.getIdlogin().getText());
         MU.setUsername(VU.getUsername().getText());
         MU.setPassword(VU.getPassword().getText());
         
         MU.EditDataUser();
         VU.clear();
     }
+    
+    
     
     
 }

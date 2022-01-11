@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:8889
--- Waktu pembuatan: 11 Jan 2022 pada 09.01
--- Versi server: 5.7.34
--- Versi PHP: 7.4.21
+-- Host: 127.0.0.1
+-- Generation Time: Jan 11, 2022 at 08:23 PM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.4.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `barang`
+-- Table structure for table `barang`
 --
 
 CREATE TABLE `barang` (
@@ -37,7 +37,7 @@ CREATE TABLE `barang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `barang`
+-- Dumping data for table `barang`
 --
 
 INSERT INTO `barang` (`id_barang`, `nama`, `jenis`, `quantity`, `ukuran`, `harga`) VALUES
@@ -47,7 +47,7 @@ INSERT INTO `barang` (`id_barang`, `nama`, `jenis`, `quantity`, `ukuran`, `harga
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `detail_trans`
+-- Table structure for table `detail_trans`
 --
 
 CREATE TABLE `detail_trans` (
@@ -58,7 +58,7 @@ CREATE TABLE `detail_trans` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `detail_trans`
+-- Dumping data for table `detail_trans`
 --
 
 INSERT INTO `detail_trans` (`id_trans`, `id_barang`, `harga_barang`, `jumlah_belanja`) VALUES
@@ -85,7 +85,7 @@ INSERT INTO `detail_trans` (`id_trans`, `id_barang`, `harga_barang`, `jumlah_bel
 (15, 1, 1000, 2);
 
 --
--- Trigger `detail_trans`
+-- Triggers `detail_trans`
 --
 DELIMITER $$
 CREATE TRIGGER `decrementStock` AFTER INSERT ON `detail_trans` FOR EACH ROW BEGIN
@@ -99,38 +99,39 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `login`
+-- Table structure for table `login`
 --
 
 CREATE TABLE `login` (
+  `id_login` int(11) NOT NULL,
   `username` varchar(1000) NOT NULL,
   `password` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `login`
+-- Dumping data for table `login`
 --
 
-INSERT INTO `login` (`username`, `password`) VALUES
-('admin', 'admin');
+INSERT INTO `login` (`id_login`, `username`, `password`) VALUES
+(1, 'admi', 'admi');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `transaksi`
+-- Table structure for table `transaksi`
 --
 
 CREATE TABLE `transaksi` (
   `id_trans` int(11) NOT NULL,
   `nama_pel` varchar(255) NOT NULL,
-  `tanggal_trans` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `tanggal_trans` datetime NOT NULL DEFAULT current_timestamp(),
   `total_belanja` int(11) NOT NULL,
   `uang_bayar` int(11) NOT NULL,
   `kembalian` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `transaksi`
+-- Dumping data for table `transaksi`
 --
 
 INSERT INTO `transaksi` (`id_trans`, `nama_pel`, `tanggal_trans`, `total_belanja`, `uang_bayar`, `kembalian`) VALUES
@@ -155,46 +156,58 @@ INSERT INTO `transaksi` (`id_trans`, `nama_pel`, `tanggal_trans`, `total_belanja
 --
 
 --
--- Indeks untuk tabel `barang`
+-- Indexes for table `barang`
 --
 ALTER TABLE `barang`
   ADD PRIMARY KEY (`id_barang`);
 
 --
--- Indeks untuk tabel `detail_trans`
+-- Indexes for table `detail_trans`
 --
 ALTER TABLE `detail_trans`
   ADD KEY `id_trans` (`id_trans`),
   ADD KEY `id_barang` (`id_barang`);
 
 --
--- Indeks untuk tabel `transaksi`
+-- Indexes for table `login`
+--
+ALTER TABLE `login`
+  ADD PRIMARY KEY (`id_login`);
+
+--
+-- Indexes for table `transaksi`
 --
 ALTER TABLE `transaksi`
   ADD PRIMARY KEY (`id_trans`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `barang`
+-- AUTO_INCREMENT for table `barang`
 --
 ALTER TABLE `barang`
   MODIFY `id_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT untuk tabel `transaksi`
+-- AUTO_INCREMENT for table `login`
+--
+ALTER TABLE `login`
+  MODIFY `id_login` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
   MODIFY `id_trans` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `detail_trans`
+-- Constraints for table `detail_trans`
 --
 ALTER TABLE `detail_trans`
   ADD CONSTRAINT `detail_trans_ibfk_1` FOREIGN KEY (`id_barang`) REFERENCES `barang` (`id_barang`) ON DELETE NO ACTION ON UPDATE NO ACTION,
