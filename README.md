@@ -24,7 +24,6 @@ module yang berkaitan dengan fitur management transaksi
 - login
 module yang berkaitan dengan autentikasi pengguna yang mengakses aplikasi
 
-aplikasi hanya dapat diakses oleh pemilik, jadi hanya ada satu user priviledge yaitu pemilik
-
+aplikasi hanya dapat diakses oleh pemilik, jadi hanya ada satu user priviledge yaitu pemilik.
 
 
